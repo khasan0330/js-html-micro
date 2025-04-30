@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    image: khdev/back-micros
+    container_name: backend-container
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  frontend:
+    image: khdev/front-micros
+    container_name: frontend-container
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
